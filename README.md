@@ -78,3 +78,14 @@ cd helpdesk-system
 
 # Instalar dependências
 pip install mysql-connector-python
+
+
+helpdesk-system/
+├── README.md
+├── sql/
+│   └── schema.sql
+├── python/
+│   └── helpdesk_app.py
+├── der/
+│   └── der_helpdesk.png
+└── .gitignore
