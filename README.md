@@ -7,6 +7,7 @@ Sistema completo de gerenciamento de chamados de suporte técnico, desenvolvido 
 
 **Equipe:**
 - Adna Cecília
+- Fernando Carvalho
 - Mário Rocha
 - Nathiara Santos
 - Saul
