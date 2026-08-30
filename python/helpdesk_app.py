@@ -145,6 +145,50 @@ def inserir_chamado(cursor, conexao):
     except (Error, ValueError) as erro:
         print(f"Erro ao inserir chamado: {erro}")
 
+
+def atualizar_chamado(cursor, conexao):
+    try:
+        id_chamado = int(input("Digite o ID do chamado que deseja atualizar: "))
+        novo_status = input("Digite o novo status: ")
+
+        sql = """
+            UPDATE chamados
+            SET status = %s
+            WHERE Id_Chamado = %s
+        """
+
+        valores = (novo_status, id_chamado)
+
+        cursor.execute(sql, valores)
+        conexao.commit()
+
+        print("Chamado atualizado com sucesso!")
+
+    except (Error, ValueError) as erro:
+        print(f"Erro ao atualizar chamado: {erro}")
+
+
+def remover_chamado(cursor, conexao):
+    try:
+        id_chamado = int(input("Digite o ID do chamado que deseja remover: "))
+
+        sql = """
+            DELETE FROM chamados
+            WHERE Id_Chamado = %s
+        """
+
+        cursor.execute(sql, (id_chamado,))
+        conexao.commit()
+
+        if cursor.rowcount > 0:
+            print("Chamado removido com sucesso!")
+        else:
+            print("Chamado não encontrado.")
+
+    except (Error, ValueError) as erro:
+        print(f"Erro ao remover chamado: {erro}")
+
+
 def menu():
     conexao = None
     cursor = None
@@ -163,6 +207,8 @@ def menu():
             print("2 - Listar chamados abertos")
             print("3 - Listar chamados com funcionário e equipamento")
             print("4 - Abrir novo chamado")
+            print("5 - Atualizar chamado")
+            print("6 - Remover chamado")
             print("0 - Sair")
 
             opcao = input("Escolha uma opção: ")
@@ -178,6 +224,12 @@ def menu():
 
             elif opcao == "4":
                 inserir_chamado(cursor, conexao)
+
+            elif opcao == "5":
+                atualizar_chamado(cursor, conexao)
+
+            elif opcao == "6":
+                remover_chamado(cursor, conexao)
 
             elif opcao == "0":
                 print("Encerrando o sistema...")
