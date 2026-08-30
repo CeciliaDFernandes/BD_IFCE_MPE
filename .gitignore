@@ -1,0 +1,3 @@
+type nul > .gitignore
+# Ignorar uma pasta inteira 
+node_modules/
