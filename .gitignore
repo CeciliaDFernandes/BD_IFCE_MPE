@@ -1,3 +1,14 @@
 type nul > .gitignore
 # Ignorar uma pasta inteira 
 node_modules/
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+# Ambientes virtuais
+venv/
+env/
+# Arquivos de configuração
+.env
+# Sistema oprecaional
+Thumbs. db .DS_Store
