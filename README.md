@@ -1,92 +1,121 @@
-# Sistema de Helpdesk (Central de Chamados de Suporte Técnico)
+# Sistema Helpdesk
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0-orange.svg)](https://www.mysql.com/)
+Sistema de gerenciamento de chamados de suporte técnico desenvolvido como projeto final da disciplina de Banco de Dados I. O projeto utiliza MySQL para armazenamento dos dados e Python para realizar a conexão e as operações no banco.
 
-Sistema completo de gerenciamento de chamados de suporte técnico, desenvolvido para integrar um banco de dados MySQL com uma aplicação Python.
+## Equipe
 
-**Equipe:**
-- Adna Cecília
-- Fernando Carvalho
-- Mário Rocha
-- Nathiara Santos
-- Saul
+* Adna Cecília
+* Fernando Carvalho
+* Mário Rocha
+* Nathiara Santos
+* Saul
 
----
+## Tema escolhido
 
-## 📋 Tema Escolhido
+O tema escolhido foi **Central de Chamados de Suporte Técnico (Helpdesk)**.
 
-O sistema modela uma **Central de Chamados de Suporte Técnico (Helpdesk)** corporativa, onde funcionários podem registrar problemas técnicos associados a equipamentos de informática. A equipe de TI realiza acompanhamentos técnicos, atualizando o status dos chamados até sua conclusão.
+O sistema foi desenvolvido para representar o atendimento de problemas relacionados a equipamentos de informática dentro de uma empresa. Os funcionários podem ter chamados registrados para seus equipamentos, enquanto os técnicos realizam acompanhamentos e atualizam o andamento dos chamados.
 
-### Objetivos do Negócio
-- **Rastreamento de Ativos**: Vincular precisamente equipamentos aos chamados
-- **Histórico Completo**: Registrar todas as interações técnicas
-- **Gerenciamento de Fluxo**: Permitir múltiplos técnicos por chamado
+O objetivo é manter organizadas as informações dos funcionários, equipamentos, técnicos, chamados e acompanhamentos realizados durante o atendimento.
 
----
+## Modelagem do banco
 
-## 🗄️ Decisões de Modelagem (3FN)
+O banco de dados possui cinco entidades:
 
-O banco foi projetado na **Terceira Forma Normal (3FN)** com 5 entidades:
+* **Funcionarios:** armazena os funcionários que podem abrir chamados.
+* **equipamentos:** armazena os equipamentos utilizados na empresa.
+* **tecnicos:** armazena os técnicos responsáveis pelo suporte.
+* **chamados:** armazena os chamados registrados pelos funcionários.
+* **acompanhamento_chamados:** registra os acompanhamentos realizados pelos técnicos.
 
-### Entidades
+Existe um relacionamento 1:N entre funcionários e chamados, pois um funcionário pode possuir vários chamados.
 
-| Entidade | Descrição | Relacionamento |
-|----------|-----------|----------------|
-| **funcionarios** | Usuários que abrem chamados | 1:N com chamados |
-| **equipamentos** | Ativos físicos da empresa | 1:N com chamados |
-| **tecnicos** | Equipe de suporte | 1:N com acompanhamentos |
-| **chamados** | Tickets de suporte | 1:N com acompanhamentos |
-| **acompanhamentos** | Entidade associativa | Resolve N:N |
+Também existe um relacionamento 1:N entre equipamentos e chamados, pois um equipamento pode estar relacionado a vários chamados ao longo do tempo.
 
-### Resolução do Relacionamento N:N
+O relacionamento entre técnicos e chamados é N:N. Para resolver esse relacionamento foi criada a entidade **acompanhamento_chamados**, que possui uma chave primária própria (`id_Acompanhamento`) e armazena informações como data, descrição e status do acompanhamento.
 
-A entidade **acompanhamentos** resolve o relacionamento N:N entre chamados e técnicos:
+A estrutura foi organizada buscando manter a normalização das tabelas, evitando informações repetidas e dependências desnecessárias entre os dados.
 
-- **Chave própria**: `id_acompanhamento` (surrogate key autoincremental)
-- **Justificativa**: Permite múltiplos registros do mesmo par (técnico, chamado) ao longo do tempo
+## DER
 
-### Normalização
+O modelo foi desenvolvido utilizando a notação **Crow's Foot (Pé de Galinha)**.
 
-- **1FN**: Atributos atômicos, sem colunas repetidas
-- **2FN**: Chaves primárias de coluna única, sem dependências parciais
-- **3FN**: Sem dependências transitivas (ex: não armazenamos telefone do departamento na tabela de funcionários)
+![DER do projeto](der/der_helpdesk.png)
 
----
+## Banco de dados
 
-## 📊 Diagrama Entidade-Relacionamento (DER)
+O banco foi desenvolvido em MySQL e possui as tabelas necessárias para o funcionamento do sistema.
 
-![DER do Projeto](der/der_helpdesk.png)
+O arquivo `sql/schema.sql` contém:
 
-O diagrama foi modelado em notação **Crow's Foot** (Pé de Galinha).
+* criação do banco de dados;
+* criação das tabelas;
+* chaves primárias e estrangeiras;
+* restrições `NOT NULL`, `UNIQUE` e `CHECK`;
+* inserção dos dados utilizados nos testes.
 
----
+## Aplicação Python
 
-## 🚀 Como Executar o Projeto
+A aplicação foi desenvolvida em Python utilizando o `mysql-connector-python`.
+
+O sistema possui um menu no terminal com as seguintes opções:
+
+1. Listar todos os chamados;
+2. Listar chamados abertos;
+3. Listar chamados com funcionário e equipamento;
+4. Abrir novo chamado;
+5. Atualizar chamado;
+6. Remover chamado;
+7. Sair.
+
+As consultas utilizam `SELECT`, incluindo consultas com `WHERE` e `JOIN`. As operações de inserção, atualização e remoção utilizam parâmetros (`%s`) para enviar os valores ao banco.
+
+Também foi utilizado tratamento de erros com `try/except/finally`, com fechamento do cursor e da conexão ao final da execução.
+
+## Como executar
 
 ### Pré-requisitos
 
-- Python 3.8 ou superior
-- MySQL Server 8.0
-- mysql-connector-python
+* Python 3.8 ou superior;
+* MySQL Server;
+* mysql-connector-python.
 
-### 1. Instalação
+### Instalação do conector
 
 ```bash
-# Clonar o repositório
-git clone https://github.com/seu-usuario/helpdesk-system.git
-cd helpdesk-system
-
-# Instalar dependências
 pip install mysql-connector-python
+```
 
+### Criar o banco
 
-helpdesk-system/
+Execute o arquivo:
+
+```text
+sql/schema.sql
+```
+
+no MySQL Workbench.
+
+### Executar a aplicação
+
+Na pasta do projeto, execute:
+
+```bash
+python python/helpdesk_app.py
+```
+
+## Estrutura do projeto
+
+```text
+BD_IFCE_MPE/
 ├── README.md
+├── .gitignore
 ├── sql/
 │   └── schema.sql
 ├── python/
 │   └── helpdesk_app.py
 ├── der/
 │   └── der_helpdesk.png
-└── .gitignore
+├── SUPORTE TECNICO - BDTF.mwb
+└── Scheme Helpdesk.mwb
+```
