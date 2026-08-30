@@ -160,6 +160,34 @@ VALUES
  'Documento apresenta falhas durante impressão.',
  'Em andamento', 2, '2026-08-26', NULL, 12, 7);
  
+USE helpdesk;
+ INSERT INTO acompanhamento_chamados
+(chamados_Id_Chamado, tecnicos_id_Tecnicos, Data_Hora, Descricao, status)
+VALUES
+(1, 1, '2026-08-20 09:30:00', 'Verificacao inicial do equipamento.', 'Em análise'),
+
+(2, 2, '2026-08-20 10:15:00', 'Testes de conexao realizados.', 'Em andamento'),
+
+(3, 3, '2026-08-21 09:00:00', 'Monitor e cabos foram verificados.', 'Concluído'),
+
+(4, 4, '2026-08-21 14:20:00', 'Analise dos travamentos do sistema.', 'Em análise'),
+
+(5, 5, '2026-08-22 11:00:00', 'Testes de impressao realizados.', 'Em andamento'),
+
+(6, 6, '2026-08-22 15:30:00', 'Teclado substituido e testado.', 'Concluído'),
+
+(7, 7, '2026-08-23 08:45:00', 'Diagnostico de erro no sistema.', 'Em análise'),
+
+(8, 8, '2026-08-24 13:10:00', 'Limpeza e verificacao do computador.', 'Em andamento'),
+
+(9, 9, '2026-08-24 16:00:00', 'Configuracao da conexao Wi-Fi.', 'Concluído'),
+
+(10, 10, '2026-08-25 10:30:00', 'Teste e substituicao do mouse.', 'Concluído'),
+
+(11, 1, '2026-08-26 09:15:00', 'Verificacao do acesso ao sistema.', 'Em análise'),
+
+(12, 2, '2026-08-26 14:40:00', 'Analise das falhas de impressao.', 'Em andamento');
+ 
 SELECT * FROM tecnicos;
 SELECT * FROM Funcionarios;
 SELECT * FROM equipamentos;
